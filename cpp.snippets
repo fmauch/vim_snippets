@@ -1,0 +1,33 @@
+global !p
+import re
+
+def snakecase(name):
+    s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
+
+def to_camel_case(name):
+    components = name.split('_')
+    return components[0] + "".join(x.title() for x in components[1:])
+
+def to_camel_case_first_title(name):
+    components = name.split('_')
+    return "".join(x.title() for x in components)
+endglobal
+
+snippet fori "for size_t loop (fori)"
+for (${4:size_t} ${2:i} = 0; $2 < ${1:count}; ${3:++$2}) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet header-guard "#ifndef ... #define ... #endif"
+#ifndef $1_INCLUDED
+#define ${1:`!p snip.rv = snip.fn or "NAME"`}_INCLUDED
+#endif // ifndef $1_INCLUDED
+endsnippet
+
+snippet getter/setter "getMember, setMember"
+${1:type} get`!p snip.rv = to_camel_case_first_title(t[2])`() const {return m_${2:snake_case_name};}
+void get`!p snip.rv = to_camel_case_first_title(t[2])`(const $1& `!p snip.rv = snakecase(t[2])`) {m_`!p snip.rv = snakecase(t[2])` = `!p snip.rv = snakecase(t[2])`;}
+endsnippet
+
