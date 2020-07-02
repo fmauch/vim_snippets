@@ -28,6 +28,18 @@ endsnippet
 
 snippet getter/setter "getMember, setMember"
 ${1:type} get`!p snip.rv = to_camel_case_first_title(t[2])`() const {return m_${2:snake_case_name};}
-void get`!p snip.rv = to_camel_case_first_title(t[2])`(const $1& `!p snip.rv = snakecase(t[2])`) {m_`!p snip.rv = snakecase(t[2])` = `!p snip.rv = snakecase(t[2])`;}
+void set`!p snip.rv = to_camel_case_first_title(t[2])`(const $1& `!p snip.rv = snakecase(t[2])`) {m_`!p snip.rv = snakecase(t[2])` = `!p snip.rv = snakecase(t[2])`;}
+endsnippet
+
+snippet cls "c++11 conform class"
+class ${1:`!p snip.rv = to_camel_case_first_title(snip.basename) or "name"`}
+{
+public:
+	${1/(\w+).*/$1/} (${2:arguments}) = default;
+	virtual ~${1/(\w+).*/$1/} () = default;
+
+private:
+	${0:/* data */}
+};
 endsnippet
 
